@@ -1,0 +1,28 @@
+{
+  "name": "ekshello",
+  "version": "1.0.0",
+  "description": "Simple application for hellos world in an EKS cluster",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint .eslintrc.js",
+    "test": "npm run lint",
+    "build": "npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kripplek/Ekshello.git"
+  },
+  "author": "Kyle Sorrels",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kripplek/Ekshello/issues"
+  },
+  "homepage": "https://github.com/kripplek/Ekshello#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1",
+    "lint": "^0.7.0"
+  }
+}
