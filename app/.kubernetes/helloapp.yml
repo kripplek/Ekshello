@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: HelloApp
+  namespace: hello-public
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: HelloApp
+  template:
+    metadata:
+      labels:
+        app: HelloApp
+    spec:
+      containers:
+      - name: HelloApp
+        image: {{ repo  }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        envFrom:
+          - configMapRef:
+              name: hello-application-enviroment-variables
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        env:
+          - name: HTTP_PORT
+            value: 8080
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+          - name: {{ todo }}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: HelloApp
+  labels:
+    app: HelloApp
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: HelloApp
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: HelloApp
+spec:
+  rules:
+  - host: HelloApp.kylesorrels.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: HelloApp
+          servicePort: 8080
+
+
