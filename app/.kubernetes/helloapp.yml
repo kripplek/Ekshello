@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: HelloApp
-        image: {{ repo  }}
+        image: kripplek/ekshello:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080

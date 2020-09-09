@@ -12,7 +12,7 @@ run npm run test
 # deploy box
 FROM node:12
 
-COPY --from=builder /code/* /code
+COPY --from=builder /code/* /code/
 
 EXPOSE 8080
 
